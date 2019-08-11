@@ -4,7 +4,7 @@ Given("user opens main page") do
   visit 'https://www.wiley.com/en-us'
 end
 
-Then("he closes change country modal") do 
+And("he closes change country modal") do 
   changeCountryModal = page.find('.modal-title', text: 'UNDETECTED COUNTRY')
 
   click_button('YES') if changeCountryModal.visible?

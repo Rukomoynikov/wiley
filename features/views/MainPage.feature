@@ -1,7 +1,7 @@
 Feature: Main page
   Background:
     Given user opens main page
-    Then he closes change country modal
+    And he closes change country modal
 
   Scenario: Main menu  
     Then following links are displayed in the top menu
