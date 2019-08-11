@@ -1,0 +1,22 @@
+# For more Ruby information and examples, see
+# https://docs.semaphoreci.com/article/73-ruby
+version: v1.0
+name: Hello Semaphore
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Integration tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - sem-version ruby 2.6.0
+          - bundle install --deployment --path vendor/bundle
+
+      jobs:
+      - name: RSpec - feature specs
+        commands:
+          - bundle exec cucumber features
