@@ -31,3 +31,15 @@ And('titles are  “Students”, “Instructors”, “Book Authors”, “Profe
   expected_menu_items = ["Students", "Instructors", "Book Authors", "Professionals", "Researchers", "Institutions", "Librarians", "Corporations", "Societies", "Journal Editors", "Bookstores", "Government"]
   expect(@submenuItems.map(&:text)).to eq(expected_menu_items)
 end
+
+Given("user opens {string} page") do |string|
+  visit 'https://www.wiley.com/en-us/contactus'
+end
+
+Given("clicks on the Wiley logo at the top menu") do
+  first('.logo a').click
+end
+
+Then("home page is opened") do
+  expect(current_url).to eq 'https://www.wiley.com/en-us'
+end
