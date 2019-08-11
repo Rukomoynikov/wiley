@@ -5,9 +5,11 @@ Given("user opens main page") do
 end
 
 And("he closes change country modal") do 
-  changeCountryModal = page.find('.modal-title', text: 'UNDETECTED COUNTRY')
+  changeCountryModal = find('.modal-title', text: 'UNDETECTED COUNTRY')
+  click_button('YES')  
 
-  click_button('YES') if changeCountryModal.visible?
+  rescue Capybara::ElementNotFound
+  true
 end
 
 Then("following links are displayed in the top menu") do
