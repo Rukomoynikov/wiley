@@ -1,5 +1,7 @@
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+require 'httparty'
+require 'time_difference';
 
 Capybara.register_driver :driver do |app|
   case ENV['DRIVER']
