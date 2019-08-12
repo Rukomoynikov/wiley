@@ -22,6 +22,7 @@ end
 
 Given("items under {string} for sub-header") do |string|
   find("a", :text => string).hover
+  find("a", :text => string).sibling('div').find('ul li a', match: :first)
   @submenuItems = find("a", :text => string).sibling('div').all('ul li a')
 end
 
@@ -39,7 +40,7 @@ Given("user opens {string} page") do |string|
 end
 
 Given("clicks on the Wiley logo at the top menu") do
-  first('.logo a').click
+  find('.logo a', match: :first).click
 end
 
 Then("home page is opened") do
