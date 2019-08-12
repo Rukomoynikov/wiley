@@ -13,6 +13,5 @@ Then("response should delayed to {int} seconds") do |timeout|
 end
 
 Then("response status should be {string}") do |response_code|
-  byebug
   expect(@response.code).to eq(response_code.to_i)
 end
