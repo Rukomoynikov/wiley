@@ -11,8 +11,8 @@ Given("user enters {string} and do not press search button") do |string|
 end
 
 Then("area with related content is displayed right under the search header") do
-  search_input = first('[action="/en-us/search"] .input-group')
-  search_result_window = first('.ui-autocomplete.main-navigation-search-autocomplete')
+  search_input = find('[action="/en-us/search"] .input-group', match: :first)
+  search_result_window = find('.ui-autocomplete.main-navigation-search-autocomplete', match: :first)
 
   search_result_window_position = search_result_window.native.location.y
   search_input_position = search_input.native.location.y
@@ -22,6 +22,7 @@ Then("area with related content is displayed right under the search header") do
 end
 
 Then("On the {string} section, it has {int} words starting with {string}") do |string, int, string2|
+  find('h3', text: string.upcase, match: :first).sibling('.search-list').find('.searchresults-item a', match: :first)
   links = find('h3', text: string.upcase, match: :first).sibling('.search-list').all('.searchresults-item a')
   titles = links.map(&:text)
   expect(titles.count).to eq(4)
@@ -36,11 +37,13 @@ Then("On the {string} section, there are {int} titles and each title contain {st
 end
 
 Given("click {string} button") do |string|
-  find('[action="/en-us/search"] [type="submit"]', match: :first).click
+  search_submit_button = find('[action="/en-us/search"] [type="submit"]', match: :first)
+  search_submit_button.click
   find('span.pagination-quantity-text', text: 'Items per page:', match: :first)
 end
 
 Then("Only titles containing {string} are displayed") do |string|
+  find('.product-title a', match: :first)
   @titles = all('.product-title a').map(&:text)
   expect(@titles.any? { |title| title.include?(string) }).to be(true)
 end
@@ -50,6 +53,7 @@ Then("there are {int} titles") do |int|
 end
 
 Then("each title has at least one {string} button") do |string|
+  find('.products-list .product-item', match: :first)
   products = all('.products-list .product-item')
 
   products_has_button = products.map do |product|
