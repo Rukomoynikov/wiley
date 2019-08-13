@@ -3,16 +3,19 @@ require 'selenium-webdriver'
 require 'httparty'
 require 'time_difference';
 
-Capybara.register_driver :driver do |app|
-  case ENV['DRIVER']
-    when 'chrome'
-      Capybara::Selenium::Driver.new(app, :browser => :chrome)
-    when 'without_browser'
-      Capybara.default_driver = :mechanize
-    else
-      client  = Selenium::WebDriver::Remote::Http::Default.new
-      Capybara::Selenium::Driver.new(app, :browser => :firefox, port: 10000 + Random.rand(1000), http_client: client)
-    end
+Capybara.register_driver :selenium do |app|
+  caps = Selenium::WebDriver::Remote::Capabilities.chrome(loggingPrefs: { browser: 'ALL' })
+  opts = Selenium::WebDriver::Chrome::Options.new
+
+  chrome_args = %w[--headless --window-size=1920,1080 --no-sandbox --disable-dev-shm-usage]
+  chrome_args.delete('--headless') if ENV['WITH_BROWSER']
+
+  chrome_args.each { |arg| opts.add_argument(arg) }
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts, desired_capabilities: caps)
 end
 
-Capybara.default_driver   = :driver
+Capybara.configure do |config|
+  config.run_server = false
+  config.default_driver = :selenium
+  config.javascript_driver = :selenium
+end
