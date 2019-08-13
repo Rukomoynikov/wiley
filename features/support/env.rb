@@ -15,4 +15,8 @@ Capybara.register_driver :driver do |app|
     end
 end
 
+config.before(:each) do
+  Capybara.page.driver.browser.manage.window.maximize
+en
+
 Capybara.default_driver   = :driver
