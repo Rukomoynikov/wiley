@@ -15,4 +15,4 @@ Capybara.register_driver :driver do |app|
     end
 end
 
-Capybara.default_driver   = :driver
+Capybara.default_driver = :driver
